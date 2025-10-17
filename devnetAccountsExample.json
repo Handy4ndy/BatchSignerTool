@@ -1,0 +1,80 @@
+{
+  "generated": "2025-10-17T13:37:47.527Z",
+  "network": "devnet",
+  "tokenInfo": {
+    "currency": "XPN",
+    "issuer": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2",
+    "issuerSeed": "sEdTuUbHdH6cimdCDDVrn8LtRQm4gjz",
+    "totalSupply": "1000"
+  },
+  "accounts": [
+    {
+      "id": 1,
+      "name": "account1",
+      "role": "issuer",
+      "address": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2",
+      "seed": "sEdTuUbHdH6cimdCDDVrn8LtRQm4gjz",
+      "publicKey": "ED48AFF53FDA7939F37C4D84709EF8AD4EF0A3FAF225BEE0E71989715B20AD89C4",
+      "privateKey": "ED94D1495C75FF4C1DA8856C111E092917C0B2CD17874E19ED47082C52C759F76D",
+      "balance": 1000,
+      "fundedAt": "2025-10-17T13:37:14.861Z",
+      "ripplingEnabled": true,
+      "ripplingTxHash": "87F4F838A4518AB6C145700535936336329D0F6B1064606BC71745562448ACF8",
+      "issuedTokens": [
+        {
+          "currency": "XPN",
+          "description": "XPN token issued by rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2",
+          "maxSupply": "unlimited"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "account2",
+      "role": "existing_holder",
+      "address": "rKkg4z2chg26DjQL4DBuDK93SbFRABtFu",
+      "seed": "sEd7M7331coPG9EEp1jcuQfV7qt1kZp",
+      "publicKey": "EDC663B674BDAC3D8E8F72BFA31ADBA1D35FC4B73049FA251C6BD1ACB1F5D7FCBA",
+      "privateKey": "ED276482BEDE9720ACFED57C1AA352D1EA7DC7D495DF4FFD8E583788FA3C8FFB8F",
+      "balance": 1000,
+      "fundedAt": "2025-10-17T13:37:23.872Z",
+      "ripplingEnabled": true,
+      "ripplingTxHash": "C2650B2E9773EB9467FF3E64E671EE74C1BA328E320DEBA6D64931F712E04DF0",
+      "trustlines": [
+        {
+          "currency": "XPN",
+          "issuer": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2",
+          "limit": "1000000",
+          "balance": "1000",
+          "trustlineTxHash": "CFE6452C020E0CE05E6F0C67C5768C17953E0F3BB505531BD91677D5B02A5171"
+        }
+      ],
+      "tokenBalance": {
+        "currency": "XPN",
+        "value": "1000",
+        "receivedTxHash": "957D502C8495779B61D9D7E314169057C86374CB0912C75A36A033C6EA9D4C97"
+      }
+    },
+    {
+      "id": 3,
+      "name": "account3",
+      "role": "new_holder",
+      "address": "rhNRkAQtEF5vX5NHmfm3oYDqTvteqp16Ev",
+      "seed": "sEdSJSFKQzw6dBkFys6fM5D3DQpmDX3",
+      "publicKey": "EDE90F4EF1195914ABF4325F6EF7B0113FCC402946D620E7F068D423066B2C1DD9",
+      "privateKey": "EDF66B8C4954BACA0157417DCF215F3F9A5512DBC7CFEBC3D5B551B5DE86170246",
+      "balance": 1000,
+      "fundedAt": "2025-10-17T13:37:47.526Z",
+      "ripplingEnabled": true,
+      "ripplingTxHash": "253A1440AC97001A077B6B62236373ABBD8EC6D8D0C168C5321A131049DDA745"
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "totalBalance": "3000 XRP",
+    "issuerAccount": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2",
+    "existingHolderAccount": "rKkg4z2chg26DjQL4DBuDK93SbFRABtFu",
+    "existingHolderTokenBalance": "1000 XPN",
+    "newHolderAccount": "rhNRkAQtEF5vX5NHmfm3oYDqTvteqp16Ev"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "TransactionType": "Batch",
+  "Account": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2",
+  "Flags": 262144,
+  "RawTransactions": [
+    {
+      "RawTransaction": {
+        "TransactionType": "TrustSet",
+        "Account": "rhNRkAQtEF5vX5NHmfm3oYDqTvteqp16Ev",
+        "LimitAmount": {
+          "currency": "XPN",
+          "value": "1000000",
+          "issuer": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2"
+        },
+        "Flags": 1073741824,
+        "Fee": "0",
+        "SigningPubKey": ""
+      }
+    },
+    {
+      "RawTransaction": {
+        "TransactionType": "Payment",
+        "Amount": {
+          "currency": "XPN",
+          "value": "100",
+          "issuer": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2"
+        },
+        "Account": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2",
+        "Destination": "rKkg4z2chg26DjQL4DBuDK93SbFRABtFu",
+        "Flags": 1073741824,
+        "Fee": "0",
+        "SigningPubKey": ""
+      }
+    },
+    {
+      "RawTransaction": {
+        "TransactionType": "Payment",
+        "Amount": {
+          "currency": "XPN",
+          "value": "100",
+          "issuer": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2"
+        },
+        "Account": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2",
+        "Destination": "rhNRkAQtEF5vX5NHmfm3oYDqTvteqp16Ev",
+        "Flags": 1073741824,
+        "Fee": "0",
+        "SigningPubKey": ""
+      }
+    }
+  ]
+}

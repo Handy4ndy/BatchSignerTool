@@ -1,0 +1,29 @@
+{
+  "TransactionType": "Batch",
+  "Account": "rKkg4z2chg26DjQL4DBuDK93SbFRABtFu",
+  "Flags": 262144,
+  "RawTransactions": [
+    {
+      "RawTransaction": {
+        "TransactionType": "Payment",
+        "Amount": "1000000",
+        "Account": "rhNRkAQtEF5vX5NHmfm3oYDqTvteqp16Ev",
+        "Destination": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2",
+        "Flags": 1073741824,
+        "Fee": "0",
+        "SigningPubKey": ""
+      }
+    },
+    {
+      "RawTransaction": {
+        "TransactionType": "Payment",
+        "Amount": "1000000",
+        "Account": "rKkg4z2chg26DjQL4DBuDK93SbFRABtFu",
+        "Destination": "rLjYu8zvMNTiV5woC8FpS9dEuvbiVeQKX2",
+        "Flags": 1073741824,
+        "Fee": "0",
+        "SigningPubKey": ""
+      }
+    }
+  ]
+}
