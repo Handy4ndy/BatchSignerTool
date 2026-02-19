@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XRPL BatchSigner Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 <span class="gradient-text">XRPL BatchSigner Generator</span></h1>
+            <p class="subtitle">Create BatchSigner objects for multi-account XLS-56 Batch transactions</p>
+        </header>
+
+        <main>
+            <!-- Security Warning -->
+            <section class="card warning-card" id="securityWarningCard">
+                <div class="warning-header">
+                    <div class="warning-title-row">
+                        <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.4rem;">⚠️</span> <span>Security Warning</span>
+                        </h2>
+                        <button id="securityChevron" class="chevron-btn" aria-label="Expand/collapse security warning"><span class="chevron">▶</span></button>
+                    </div>
+                </div>
+                <div class="warning-content" id="securityWarningContent">
+                    <p class="warning-text">Browser extensions can access your seed!</p>
+                    <ul>
+                        <li>Use in <strong>Incognito/Private mode</strong> or disable all extensions</li>
+                        <li>For maximum security, download and run <strong>offline</strong></li>
+                        <li>This tool works on both <strong>testnet and mainnet</strong> – be careful!</li>
+                        <li>Always verify you're on the correct website (not a phishing clone)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Devnet Demo Mode Toggle -->
+            <section class="card">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="toggle-switch-group">
+                        <span id="toggleLabelManual" class="toggle-label toggle-label-left">Manual</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="devnetMode">
+                            <span class="slider"></span>
+                        </label>
+                        <span id="toggleLabelDevnet" class="toggle-label toggle-label-right">Devnet</span>
+                    </div>
+                    <span class="text-lg font-medium text-teal-400" style="margin-left: 18px;">Devnet Demo Mode (Auto generate, sign & submit full Batch)</span>
+                </div>
+                <div id="devnetInfo" class="hidden bg-gray-800 p-4 rounded border border-teal-700/50 text-sm text-gray-300">
+                    <p><strong>What this does:</strong></p>
+                    <ol class="list-decimal ml-5 mt-2 space-y-1">
+                        <li>Generate & fund 3 fresh devnet accounts</li>
+                        <li>Create a simple Batch tx (two 1 XRP payments from acc1 & acc2 to acc3)</li>
+                        <li>Generate BatchSigner for account 2</li>
+                        <li>Combine and submit the full Batch</li>
+                    </ol>
+                    <p class="mt-2">No real funds at risk. Uses public devnet. Takes ~10–20 seconds.</p>
+                </div>
+            </section>
+
+            <!-- Manual Mode: Batch JSON Input (shown when devnet off) -->
+            <section class="card" id="manualBatchSection">
+                <h2>Step 1: Paste Batch Template JSON</h2>
+                <p class="hint">Paste the full "Batch" transaction template (no BatchSigners array yet).<br>
+                <strong>Important:</strong> Each inner tx must have a valid "Sequence" or "TicketSequence".</p>
+                <textarea 
+                    id="batchJson" 
+                    placeholder='{
+    "TransactionType": "Batch",
+    "Account": Account1, 
+    "Flags": 262144,
+    "RawTransactions": [
+      {
+        "RawTransaction": {
+          "TransactionType": "Payment",
+          "Amount": "1000000",
+          "Account": Account1,
+          "Destination": Account3, 
+          "Flags": 1073741824,
+          "Fee": "0",
+          "SigningPubKey": ""
+        }
+      },
+       {
+        "RawTransaction": {
+          "TransactionType": "Payment",
+          "Amount": "1000000",
+          "Account": Account2,  
+          "Destination": Account3, 
+          "Flags": 1073741824,
+          "Fee": "0",
+          "SigningPubKey": ""
+        }
+      }
+    ]
+  }'
+                    rows="29"
+                ></textarea>
+                <div class="validation" id="batchValidation"></div>
+            </section>
+
+            <!-- Manual Mode: Seed Input (shown when devnet off) -->
+            <section class="card" id="manualSeedSection">
+                <h2>Step 2: Enter Your Seed</h2>
+                <p class="hint">Used only locally — never sent anywhere.</p>
+                <div class="input-group">
+                    <input 
+                        type="password" 
+                        id="seed" 
+                        placeholder="sEd...................................."
+                        autocomplete="off"
+                    />
+                    <button type="button" id="toggleSeed" class="toggle-btn" title="Show / Hide seed">👁️</button>
+                </div>
+                <div class="validation" id="seedValidation"></div>
+            </section>
+
+            <!-- Generate / Start Demo Button -->
+            <section class="card action-section">
+                <button id="generateBtn" class="primary-btn" disabled>Generate BatchSigner</button>
+                <button id="startDemoBtn" class="primary-btn hidden bg-teal-600 hover:bg-teal-500">Start Devnet Demo</button>
+            </section>
+
+            <!-- Devnet Progress -->
+            <section class="card hidden" id="devnetProgress">
+                <h2>Devnet Demo Progress</h2>
+                <div id="devnetStatus" class="bg-gray-900 p-4 rounded font-mono text-sm whitespace-pre-wrap max-h-96 overflow-y-auto border border-gray-700"></div>
+            </section>
+
+            <!-- Results (for both modes) -->
+            <section class="card result-section" id="resultSection" style="display: none;">
+                <h2>✅ Results</h2>
+                <p class="hint">Use tabs to view/copy different formats. In demo mode, you'll see submission result below.</p>
+
+                <!-- Tabs -->
+                <div class="tabs" style="margin: 15px 0; text-align: center;">
+                    <button class="tab-btn active" data-tab="array">BatchSigners Array</button>
+                    <button class="tab-btn" data-tab="full">Full Batch Template</button>
+                </div>
+
+                <div id="tab-array" class="tab-content" style="display: none;">
+                    <div class="result-container">
+                        <pre id="batchSignersOutput"></pre>
+                        <button id="copyArrayBtn" class="copy-btn" title="Copy BatchSigners array">📋 Copy Array</button>
+                    </div>
+                </div>
+
+                <div id="tab-full" class="tab-content" style="display: none;">
+                    <div class="result-container">
+                        <pre id="fullBatchOutput"></pre>
+                        <button id="copyFullBtn" class="copy-btn" title="Copy full updated Batch">📋 Copy Full</button>
+                    </div>
+                </div>
+
+
+                <!-- NEW: Devnet Submission Result View -->
+                <div id="devnetResultView" class="hidden mt-6 p-4 bg-green-900/30 border border-green-600/50 rounded-lg">
+                    <h3 class="text-lg font-bold text-green-400 mb-2">Batch Submitted Successfully!</h3>
+                    <p id="devnetHash" class="font-mono text-sm break-all"></p>
+                    <p class="mt-2">
+                        <a id="devnetExplorerLink" href="#" target="_blank" class="text-teal-300 underline hover:text-teal-200">View on Devnet Explorer</a>
+                    </p>
+                </div>
+
+                <p class="hint" style="margin-top: 15px; font-size: 0.85rem;">
+                    Coordinator can append more BatchSigners[], then finalize/submit using xrpl.js.
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <p class="warning">⚠️ Never share your seed. This tool runs 100% in your browser.</p>
+            <p class="warning">🔒 Max security: incognito mode + extensions off, or run offline.</p>
+            <p class="credit">Built for the <a href="https://xrpl.org" target="_blank">XRP Ledger</a> community</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xrpl@4.5.0/build/xrpl-latest-min.js"></script>
+    <script src="devnet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
